@@ -1,4 +1,5 @@
 <?php
+use Smarty\Smarty;
 
 $errors = array();
 $kwota = null;
@@ -58,5 +59,19 @@ if(validate($kwota, $oprocentowanie, $okres, $errors)) {
     $suma_odsetek = $calkowity_koszt - $kwota;
 }
 
-// wygenerowanie odpowiedzi
-include "index.php";
+// blok smarty
+require_once __DIR__ . '/vendor/autoload.php';
+
+$smarty = new Smarty();
+$smarty->setTemplateDir(__DIR__ . '/templates/');
+$smarty->setCompileDir(__DIR__ . '/templates_c/');
+
+$smarty->assign('errors',             $errors);
+$smarty->assign('kwota_val',          $_GET['kwota']          ?? '');
+$smarty->assign('oprocentowanie_val', $_GET['oprocentowanie'] ?? '');
+$smarty->assign('okres_val',          $_GET['okres']          ?? '');
+$smarty->assign('rata',               $rata !== null ? number_format($rata, 2, ',', ' ') : null);
+$smarty->assign('calkowity_koszt',    $rata !== null ? number_format($calkowity_koszt, 2, ',', ' ') : null);
+$smarty->assign('suma_odsetek',       $rata !== null ? number_format($suma_odsetek, 2, ',', ' ')    : null);
+
+$smarty->display('credit.tpl');  //
