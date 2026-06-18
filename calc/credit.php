@@ -44,7 +44,7 @@ function validate(&$kwota, &$oprocentowanie, &$okres, &$errors){
     return true;
 }
 
-// wykonanie akcji/dzialania - obliczenie raty równej (annuitetowej)
+// wykonanie akcji/dzialania - obliczenie raty równej
 if(validate($kwota, $oprocentowanie, $okres, $errors)) {
     $r = $oprocentowanie / 100 / 12; // miesięczna stopa procentowa
 
@@ -59,4 +59,4 @@ if(validate($kwota, $oprocentowanie, $okres, $errors)) {
 }
 
 // wygenerowanie odpowiedzi
-include "credit_view.php";
+include "index.php";
